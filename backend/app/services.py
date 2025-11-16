@@ -11,7 +11,6 @@ from sqlalchemy.exc import IntegrityError
 
 
 def create_short_url(long_url: str) -> UrlMap:
-    # retry in the ultra-rare event of a collision
     for _ in range(5):
         code = generate_short_code(7)
         with get_session() as session:

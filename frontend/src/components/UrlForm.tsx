@@ -8,10 +8,14 @@ export default function UrlForm() {
     const [error, setError] = useState<string | null>(null);
     const [shortUrl, setShortUrl] = useState<string | null>(null);
   
-    async function onSubmit(e: React.FormEvent) {
-      e.preventDefault();
-      setError(null); setShortUrl(null);
-      if (!url.trim()) { setError("Please enter a URL"); return; }
+    async function onSubmit(event: React.FormEvent) {
+      event.preventDefault();
+      setError(null);
+      setShortUrl(null);
+      if (!url.trim()) { 
+        setError("Please enter a URL");
+        return;
+      }
       setIsLoading(true);
       try {
         const data = await shorten(url.trim());
@@ -19,7 +23,9 @@ export default function UrlForm() {
       } catch (err: unknown) {
         console.log("error", err);
         setError(err instanceof Error ? err.message : "Failed");
-      } finally { setIsLoading(false); }
+      } finally { 
+        setIsLoading(false);
+      }
     }
   
     return (

@@ -33,7 +33,6 @@ PUBLIC_BASE = os.getenv("PUBLIC_BASE", "http://localhost:8000")
 
 @app.post("/api/shorten", response_model=ShortenResponse, status_code=201)
 def shorten(payload: ShortenRequest):
-    # Validation already done by Pydantic (HttpUrl)
     print(str(payload.url))
     row = create_short_url(str(payload.url))
     return ShortenResponse(short_url=f"{PUBLIC_BASE}/{row.short_code}", short_code=row.short_code)
@@ -44,5 +43,4 @@ def redirect(code: str):
     long_url = resolve_code(code)
     if not long_url:
         raise HTTPException(status_code=404, detail="Not found")
-    # 302 temporary redirect suits a dynamic service
     return RedirectResponse(long_url, status_code=302)
