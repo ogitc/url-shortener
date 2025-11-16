@@ -42,4 +42,5 @@ Start both containers and link them automatically
 cd backend
 python -m venv .venv
 source .venv/bin/activate
+pytest -q
 ```
